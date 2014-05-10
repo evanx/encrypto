@@ -2,9 +2,9 @@
 
 /* Services */
 
-angular.module('myApp.services', [])
-   .value('version', '0.1')
-   .factory("personaService", ["$http", "$q", function($http, $q) {
+angular.module('myApp.services', []).value('version', '0.1').factory("personaService", [
+   "$http", "$q", function($http, $q) {
+      console.log("personaService");
       return {
          login: function(assertion) {
             var deferred = $q.defer();
@@ -35,6 +35,8 @@ angular.module('myApp.services', [])
             });
          }
       };
+   }]).factory("appService", ["$http", "$q", function($http, $q) {
+      console.log("appService");
+      return {
+      }
    }]);
-
-

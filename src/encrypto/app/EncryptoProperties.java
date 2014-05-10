@@ -58,6 +58,7 @@ public class EncryptoProperties extends JConsoleMap {
         super(console, properties);
         String jsonConfigFileName = getString("config.json", "config.json");
         JsonObjectDelegate object = new JsonObjectDelegate(new File(jsonConfigFileName));
+        putAll(object.getMap());
         siteUrl = object.getString("siteUrl");
         testing = object.getBoolean("testing", testing);
         adminEmails = object.getStringSet("adminEmails");

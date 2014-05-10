@@ -5,6 +5,7 @@
 angular.module('myApp.controllers', []).controller("appController", ["$scope", "$location", "personaService",
    function($scope, $location, personaService) {
       console.log("appController");
+      $scope.loggingIn = false;
       $scope.state = {};
       $scope.isActive = function(route) {
          return route === $location.path();
@@ -69,5 +70,8 @@ angular.module('myApp.controllers', []).controller("appController", ["$scope", "
          setTimeout(function() {
          }, 500);
       }
+   }]).controller("homeController", ["$scope", "$location", "appService",
+      function($scope, $location, appService) {
+         console.log("homeController");
+      
    }]);
-;
