@@ -21,23 +21,17 @@
 package encrypto.app;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import javax.net.ssl.SSLContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import vellum.data.Millis;
 import vellum.exception.ParseException;
 import vellum.httpserver.VellumHttpServer;
 import vellum.httpserver.VellumHttpsServer;
-import vellum.jx.JMap;
 import vellum.jx.JMapException;
 import vellum.mail.Mailer;
 import vellum.ssl.OpenTrustManager;
@@ -53,8 +47,6 @@ public class EncryptoApp {
     EncryptoProperties properties = new EncryptoProperties();
     Mailer mailer;
     VellumHttpsServer webServer = new VellumHttpsServer();
-    VellumHttpServer httpRedirectServer = new VellumHttpServer();
-    VellumHttpServer insecureServer = new VellumHttpServer();
     EntityManagerFactory emf;
     boolean initalized = false;
     boolean running = true;
@@ -114,9 +106,6 @@ public class EncryptoApp {
         executorService.shutdown();
         if (webServer != null) {
             webServer.shutdown();
-        }
-        if (httpRedirectServer != null) {
-            httpRedirectServer.shutdown();
         }
         if (messageThread != null) {
             messageThread.interrupt();

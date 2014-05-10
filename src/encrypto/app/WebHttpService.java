@@ -45,13 +45,13 @@ public class WebHttpService implements HttpHandler {
             } else if (path.equals("/app/personaLogout")) {
                 handle(new PersonaLogout(), new EncryptoHttpx(app, httpExchange));
             } else if (path.startsWith("/app/")) {
-                    String handlerName = getHandlerName(path);
-                    if (handlerName != null) {
-                        handle(getHandler(handlerName), new EncryptoHttpx(app, httpExchange));
-                    } else {
-                        new ErrorHttpHandler(app).handle(httpExchange, "Service not found: " + path);
-                    }
-                        } else {
+                String handlerName = getHandlerName(path);
+                if (handlerName != null) {
+                    handle(getHandler(handlerName), new EncryptoHttpx(app, httpExchange));
+                } else {
+                    new ErrorHttpHandler(app).handle(httpExchange, "Service not found: " + path);
+                }
+            } else {
                 webHandler.handle(httpExchange);
             }
         } catch (Throwable e) {
