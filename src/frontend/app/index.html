@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en" ng-app="myApp">
 <!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
@@ -6,24 +7,48 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
+  <title>Encrypto</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
   <link rel="stylesheet" href="css/app.css"/>
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
-
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
+  <div class="navbar navbar-fixed-top navbar-inverse" role="navigation" style="width: 100%">
+    <div class="container">
+      <div class="navbar-header">
+        <span class="navbar-brand">Encrypto</span>
+      </div>
+      <div class="collapse navbar-collapse" ng-cloak>
+        <ul class="nav navbar-nav">
+          <li><a href="#/sections" style="outline: 0">
+              <span class="glyphicon glyphicon-chevron-down"></span></a>
+          </li>
+          <li ng-class="{active: isActive('/section/home')}"><a href="#/section/home">Home</a></li>
+        </ul>
+        <div class="navbar-collapse collapse navbar-right" ng-cloak ng-hide="mobile">
+          <div class="navbar-text" ng-cloak ng-show="!persona.email && !loggingIn">
+            <a ng-click="login()" href="#"><img src="images/persona-login.png"/></a>
+          </div>
+          <div class="navbar-text" ng-show="loggingIn">
+            <span>Verify...</span>
+          </div>
+          <div class="navbar-text" ng-cloak ng-show="persona.email && !loggingIn">
+            <a ng-click="logout()" class="navbar-link" href="#">{{persona.email}}</a>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+
+  
   <div ng-view></div>
 
   <!-- In production use:

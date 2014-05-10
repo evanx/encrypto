@@ -21,41 +21,48 @@
 package encrypto.app;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import vellum.exception.ParseException;
 import vellum.json.JsonObjectDelegate;
-import vellum.jx.JMapException;
+import vellum.jx.JConsoleMap;
+import vellum.jx.JMap;
 import vellum.mail.MailerProperties;
-import vellum.util.ExtendedProperties;
+import vellum.system.SystemConsole;
+import vellum.util.MockableConsole;
 import vellum.util.Streams;
 
 /**
  *
  * @author evan.summers
  */
-public class EncryptoProperties {
+public class EncryptoProperties extends JConsoleMap {
 
     static Logger logger = LoggerFactory.getLogger(EncryptoProperties.class);
 
+    JMap properties;
+    JMap webServer;
     String siteUrl;
     boolean testing = false;
     Set<String> adminEmails = new HashSet();
-    ExtendedProperties webServer;
-    final ExtendedProperties properties = new ExtendedProperties(System.getProperties());
-    final MailerProperties mailerProperties = new MailerProperties();
+    MailerProperties mailerProperties = new MailerProperties();
+    MockableConsole console; 
 
-    public void init() throws IOException, ParseException, JMapException {
-        String jsonConfigFileName = properties.getString("config.json", "config.json");
+    public EncryptoProperties() throws Exception {
+        this(new SystemConsole(), System.getProperties());
+    } 
+    
+    public EncryptoProperties(MockableConsole console, Properties properties) throws Exception {
+        super(console, properties);
+        String jsonConfigFileName = getString("config.json", "config.json");
         JsonObjectDelegate object = new JsonObjectDelegate(new File(jsonConfigFileName));
         siteUrl = object.getString("siteUrl");
         testing = object.getBoolean("testing", testing);
         adminEmails = object.getStringSet("adminEmails");
-        webServer = object.getProperties("webServer");
-        mailerProperties.init(object.getProperties("mailer"));
+        webServer = object.getMap("webServer");
+        mailerProperties.init(object.getMap("mailer"));
         mailerProperties.setLogoBytes(Streams.readBytes(getClass().getResourceAsStream("/resources/app48.png")));
         logger.info("mailer {}", mailerProperties);
     }
@@ -68,7 +75,7 @@ public class EncryptoProperties {
         return mailerProperties;
     }
 
-    public ExtendedProperties getWebServer() {
-        return webServer;
+    public JConsoleMap getWebServer() {
+        return new JConsoleMap(console, webServer);
     }       
 }

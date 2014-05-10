@@ -20,6 +20,11 @@
  */
 package encrypto.app;
 
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+import vellum.system.SystemConsole;
+
 /**
  *
  * @author evan.summers
@@ -31,11 +36,14 @@ public class EncryptoMain {
 
     public void init() throws Exception {
         EncryptoApp app = new EncryptoApp();
-        app.init();
+        app.init(new EncryptoProperties(new SystemConsole(), System.getProperties()));
     }
     
     public static void main(String[] args) throws Exception {
         try {
+            Logger.getRootLogger().getLoggerRepository().resetConfiguration();
+            Logger.getRootLogger().addAppender(new ConsoleAppender(
+                    new PatternLayout("%d{ISO8601} %p [%c{1}] %m%n")));
             new EncryptoMain().init();
         } catch (Exception e) {
             e.printStackTrace(System.err);

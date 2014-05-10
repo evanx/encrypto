@@ -44,7 +44,7 @@ import vellum.ssl.OpenTrustManager;
 public class EncryptoApp {
 
     Logger logger = LoggerFactory.getLogger(EncryptoApp.class);
-    EncryptoProperties properties = new EncryptoProperties();
+    EncryptoProperties properties;
     Mailer mailer;
     VellumHttpsServer webServer = new VellumHttpsServer();
     EntityManagerFactory emf;
@@ -58,12 +58,8 @@ public class EncryptoApp {
         super();
     }
 
-    public void initProperties() throws IOException, ParseException, JMapException {
-        properties.init();
-    }
-
-    public void init() throws Exception {
-        properties.init();
+    public void init(EncryptoProperties properties) throws Exception {
+        this.properties = properties;
         mailer = new Mailer(properties.getMailerProperties());
         logger.info("properties {}", properties);
         webServer.start(properties.getWebServer(),

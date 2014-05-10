@@ -23,13 +23,14 @@ import vellum.jx.JMap;
 public class WebHttpService implements HttpHandler {
 
     private final static Logger logger = LoggerFactory.getLogger(WebHttpService.class);
-    private final static WebHttpHandler webHandler = new WebHttpHandler("/encrypto/web");
     private final EncryptoApp app;
+    private final WebHttpHandler webHandler;
     private int requestCount = 0;
     private int requestCompletedCount = 0;
     
     public WebHttpService(EncryptoApp app) {
         this.app = app;
+        webHandler = new WebHttpHandler("/frontend/app", app.getProperties());
     }
 
     @Override
@@ -78,7 +79,7 @@ public class WebHttpService implements HttpHandler {
 
     private EncryptoHttpxHandler getHandler(String handlerName) throws ClassNotFoundException,
             InstantiationException, IllegalAccessException {
-        String className = "encrypto.handler.app."
+        String className = "encrypto.handler."
                 + Character.toUpperCase(handlerName.charAt(0)) + handlerName.substring(1);
         logger.trace("handler {}", className);
         return (EncryptoHttpxHandler) Class.forName(className).newInstance();
@@ -125,5 +126,4 @@ public class WebHttpService implements HttpHandler {
         map.put("requestCompletedCount", requestCompletedCount);
         return map;
     }
-    
 }
