@@ -20,7 +20,6 @@
  */
 package encrypto.app;
 
-import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.persistence.EntityManager;
@@ -29,10 +28,7 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import vellum.exception.ParseException;
-import vellum.httpserver.VellumHttpServer;
 import vellum.httpserver.VellumHttpsServer;
-import vellum.jx.JMapException;
 import vellum.mail.Mailer;
 import vellum.ssl.OpenTrustManager;
 
