@@ -12,7 +12,7 @@ import java.util.TimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vellum.httpserver.Httpx;
-import vellum.jx.JMapException;
+import vellum.jx.JMapsException;
 
 /**
  *
@@ -30,7 +30,7 @@ public class EncryptoHttpx extends Httpx {
         this.app = app;
     }
 
-    public EncryptoCookie getCookie() throws JMapException {
+    public EncryptoCookie getCookie() throws JMapsException {
         if (cookie == null) {
             if (EncryptoCookie.matches(getCookieMap())) {
                 cookie = new EncryptoCookie(getCookieMap());
@@ -42,7 +42,7 @@ public class EncryptoHttpx extends Httpx {
         return cookie;
     }
 
-    public String getEmail() throws JMapException, IOException, PersonaException {
+    public String getEmail() throws JMapsException, IOException, PersonaException {
         if (getCookie() != null) {
             if (cookie.getEmail() != null) {
                 if (app.properties.isTesting()) {
@@ -62,7 +62,7 @@ public class EncryptoHttpx extends Httpx {
         throw new PersonaException("no verified email");
     }
 
-    public TimeZone getTimeZone() throws JMapException {
+    public TimeZone getTimeZone() throws JMapsException {
         if (getCookie() != null) {
             return getTimeZone(cookie.getTimeZoneOffset());
         }
